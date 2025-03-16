@@ -1,0 +1,4 @@
+requests
+crptography
+flask
+gunicorn
