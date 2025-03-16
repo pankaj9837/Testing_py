@@ -1,4 +1,5 @@
 import json
+import os
 import base64
 import hmac
 import hashlib
@@ -74,4 +75,5 @@ def is_request_signature_valid(req):
     return True
 
 if __name__ == "__main__":
-    app.run(port=PORT)
+    port = int(os.environ.get("PORT", 10000))  # Use Render's assigned port
+    app.run(host="0.0.0.0", port=port)
