@@ -1,4 +1,4 @@
 requests
-crptography
+cryptography
 flask
 gunicorn
