@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 import requests
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
 SCREEN_RESPONSES = {
     "APPOINTMENT": {"data": {}},
@@ -15,7 +15,7 @@ def get_data(search):
     response = requests.get(f"{API_URL}{search}")
     return response.json()
 
-@app.route('/api/getNextScreen', methods=['POST'])
+# @app.route('/api/getNextScreen', methods=['POST'])
 
 def get_next_screen(decrypted_body):
     screen = decrypted_body.get("screen")
@@ -85,5 +85,3 @@ def get_next_screen(decrypted_body):
     print("Unhandled request body:", decrypted_body)
     return jsonify({"error": "Unhandled request"}), 400
 
-if __name__ == '__main__':
-    app.run(debug=True)
