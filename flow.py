@@ -3,7 +3,7 @@ import requests
 
 # app = Flask(__name__)
 
-const SCREEN_RESPONSES = {
+SCREEN_RESPONSES = {
   "APPOINTMENT": {
     "screen": "APPOINTMENT",
     "data": {
@@ -47,8 +47,8 @@ const SCREEN_RESPONSES = {
           "title": "Piccadilly Circus, London"
         }
       ],
-      "is_location_enabled": true,
-      "is_date_enabled": true,
+      "is_location_enabled": True,
+      "is_date_enabled": True,
       "time": [
         {
           "id": "10:00",
@@ -57,7 +57,7 @@ const SCREEN_RESPONSES = {
         {
           "id": "11:21",
           "title": "11:21",
-          "enabled": false
+          "enabled": False
         },
         {
           "id": "11:31",
@@ -66,14 +66,14 @@ const SCREEN_RESPONSES = {
         {
           "id": "12:11",
           "title": "12:11",
-          "enabled": false
+          "enabled": False
         },
         {
           "id": "12:30",
           "title": "12:11"
         }
       ],
-      "is_time_enabled": true,
+      "is_time_enabled": True,
       "img": "iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAA..."
     }
   },
@@ -106,8 +106,7 @@ const SCREEN_RESPONSES = {
       "phone": "123456789"
     }
   }
-};
-
+}
 
 def get_data(search):
     response = requests.get(f"https://api.duniyatech.com/WhatsApp-cloud-api/fatch_date_and_time/{search}")
