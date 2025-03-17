@@ -59,7 +59,7 @@ def decrypt_request(body, private_pem, passphrase):
             private_pem.encode(), password=passphrase.encode()
         )
     except ValueError as e:
-        raise FlowEndpointException(422, "Invalid private key or passphrase.") from e
+        raise FlowEndpointException(500, "Invalid private key or passphrase.") from e
     
     try:
         decrypted_aes_key = private_key.decrypt(
