@@ -3,17 +3,111 @@ import requests
 
 # app = Flask(__name__)
 
-SCREEN_RESPONSES = {
-    "APPOINTMENT": {
-        "data": {
-            "is_date_enabled": True,
-            "is_time_enabled": False
+const SCREEN_RESPONSES = {
+  "APPOINTMENT": {
+    "screen": "APPOINTMENT",
+    "data": {
+      "department": [
+        {
+          "id": "shopping",
+          "title": "Shopping & Groceries"
+        },
+        {
+          "id": "clothing",
+          "title": "Clothing & Apparel"
+        },
+        {
+          "id": "home",
+          "title": "Home Goods & Decor"
+        },
+        {
+          "id": "electronics",
+          "title": "Electronics & Appliances"
+        },
+        {
+          "id": "beauty",
+          "title": "Beauty & Personal Care"
         }
-    },
-    "DETAILS": {},
-    "SUMMARY": {},
-    "SUCCESS": {}
-}
+      ],
+      "location": [
+        {
+          "id": "1",
+          "title": "King’s Cross, London"
+        },
+        {
+          "id": "2",
+          "title": "Oxford Street, London"
+        },
+        {
+          "id": "3",
+          "title": "Covent Garden, London"
+        },
+        {
+          "id": "4",
+          "title": "Piccadilly Circus, London"
+        }
+      ],
+      "is_location_enabled": true,
+      "is_date_enabled": true,
+      "time": [
+        {
+          "id": "10:00",
+          "title": "10:00"
+        },
+        {
+          "id": "11:21",
+          "title": "11:21",
+          "enabled": false
+        },
+        {
+          "id": "11:31",
+          "title": "11:31"
+        },
+        {
+          "id": "12:11",
+          "title": "12:11",
+          "enabled": false
+        },
+        {
+          "id": "12:30",
+          "title": "12:11"
+        }
+      ],
+      "is_time_enabled": true,
+      "img": "iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAA..."
+    }
+  },
+  "DETAILS": {
+    "screen": "DETAILS",
+    "data": {
+      "symptoms": [
+        {
+          "id": "Cold",
+          "title": "cold"
+        },
+        {
+          "id": "Cough",
+          "title": "Cough"
+        }
+      ]
+    }
+  },
+  "SUMMARY": {
+    "screen": "SUMMARY",
+    "data": {
+      "appointment": "Beauty & Personal Care Department at Kings Cross, London\nMon Jan 01 2024 at 11:30.",
+      "details": "Name: John Doe\nEmail: john@example.com\nPhone: 123456789\n\nA free skin care consultation, please",
+      "department": "beauty",
+      "location": "1",
+      "date": "2024-01-01",
+      "time": "11:30",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "phone": "123456789"
+    }
+  }
+};
+
 
 def get_data(search):
     response = requests.get(f"https://api.duniyatech.com/WhatsApp-cloud-api/fatch_date_and_time/{search}")
