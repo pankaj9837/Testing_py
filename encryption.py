@@ -58,6 +58,7 @@ def decrypt_request(body, private_pem, passphrase):
         private_key = serialization.load_pem_private_key(
             private_pem.encode(), password=passphrase.encode()
         )
+        print("Private key loaded successfully.")
     except ValueError as e:
         raise FlowEndpointException(500, "Invalid private key or passphrase.") from e
     
