@@ -56,16 +56,11 @@ def decrypt_request(body, private_pem, passphrase):
     
     try:
         private_key = serialization.load_pem_private_key(
-            private_pem.encode(),
-            password=passphrase.encode() if passphrase else None,  # Ensure password is used correctly
-            backend=default_backend()
+            private_pem.encode(), password=passphrase.encode()
         )
     except ValueError as e:
-        raise FlowEndpointException(421, "Invalid password or unsupported key format.")
-    except Exception as e:
-        print(e)
-        raise FlowEndpointException(421, "Failed to load private key.")
-
+        raise FlowEndpointException(422, "Invalid private key or passphrase.") from e
+    
     try:
         decrypted_aes_key = private_key.decrypt(
             encrypted_aes_key,
@@ -76,18 +71,22 @@ def decrypt_request(body, private_pem, passphrase):
             ),
         )
     except Exception as e:
-        print(e)
-        raise FlowEndpointException(421, "Failed to decrypt the request. Please verify your private key.")
-
+        print(f"Decryption error: {e}")
+        raise FlowEndpointException(421, "Failed to decrypt the request. Please verify your private key.") from e
+    
+    # Validate lengths
+    if len(decrypted_aes_key) not in {16, 24, 32}:
+        raise FlowEndpointException(422, "Decrypted AES key has an invalid length.")
+    
     TAG_LENGTH = 16
     encrypted_flow_data_body = encrypted_flow_data[:-TAG_LENGTH]
     encrypted_flow_data_tag = encrypted_flow_data[-TAG_LENGTH:]
-
+    
     cipher = Cipher(algorithms.AES(decrypted_aes_key), modes.GCM(initial_vector, encrypted_flow_data_tag))
     decryptor = cipher.decryptor()
-
+    
     decrypted_json_string = decryptor.update(encrypted_flow_data_body) + decryptor.finalize()
-
+    
     return {
         "decryptedBody": json.loads(decrypted_json_string.decode("utf-8")),
         "aesKeyBuffer": decrypted_aes_key,
