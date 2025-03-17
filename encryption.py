@@ -70,13 +70,16 @@ def decrypt_request(body, private_pem, passphrase):
                 label=None,
             ),
         )
+    except ValueError as e:
+        print("Decryption failed: Incorrect key or bad data.")
+        raise FlowEndpointException(444, "Decryption failed. Check your private key and encrypted data.") from e
+    except TypeError as e:
+        print("Private key is not loaded correctly.")
+        raise FlowEndpointException(445, "Invalid private key format.") from e
     except Exception as e:
-        print(f"Decryption error: {e}")
-        raise FlowEndpointException(421, "Failed to decrypt the request. Please verify your private key.") from e
-    
-    # Validate lengths
-    if len(decrypted_aes_key) not in {16, 24, 32}:
-        raise FlowEndpointException(422, "Decrypted AES key has an invalid length.")
+        print(f"Unexpected error: {e}")
+        raise FlowEndpointException(446, "Decryption error occurred.") from e
+
     
     TAG_LENGTH = 16
     encrypted_flow_data_body = encrypted_flow_data[:-TAG_LENGTH]
