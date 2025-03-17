@@ -17,8 +17,7 @@ def get_data(search):
 
 @app.route('/api/getNextScreen', methods=['POST'])
 
-def get_next_screen():
-    decrypted_body = request.json
+def get_next_screen(decrypted_body):
     screen = decrypted_body.get("screen")
     data = decrypted_body.get("data")
     action = decrypted_body.get("action")
