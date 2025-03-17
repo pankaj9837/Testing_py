@@ -70,7 +70,7 @@ def decrypt_request(body, private_pem, passphrase):
                 label=None,
             ),
         )
-         print("AES Key decrypted successfully:", decrypted_aes_key)
+        print("AES Key decrypted successfully:", decrypted_aes_key)
     except ValueError as e:
         print("Decryption failed: Incorrect key or bad data.",encrypted_aes_key)
         raise FlowEndpointException(444, "Decryption failed. Check your private key and encrypted data.") from e
